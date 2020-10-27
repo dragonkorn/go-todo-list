@@ -1,8 +1,7 @@
 package server
 
 import (
-	"db"
-
+	// "github.com/dragonkorn/go-todo-list/src/db"
 	"github.com/labstack/echo"
 )
 
@@ -10,7 +9,7 @@ import (
 func Init() {
 	e := echo.New()
 
-	db.Connect()
+	// db.Connect()
 
 	e = getRouter(e)
 

@@ -1,9 +1,9 @@
 package server
 
 import (
-	"controllers"
 	"net/http"
 
+	"github.com/dragonkorn/go-todo-list/src/controllers"
 	"github.com/labstack/echo"
 )
 
