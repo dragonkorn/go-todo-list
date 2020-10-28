@@ -12,15 +12,22 @@ func TodoQuery() []db.TodoItemModel {
 	return todo
 }
 
+// // TodoGetByStar - query all todo with started equal to true
+// func TodoGetByStar() []db.TodoItemModel {
+// 	var todo []db.TodoItemModel
+// 	db.DB.where("Stared = true").First(&todo)
+// 	return todo
+// }
+
+// // TodoGetByID - query todo by Id
+// func TodoGetByID(Id) db.TodoItemModel {
+// 	var todo db.TodoItemModel
+// 	db.DB.First(&todo, Id)
+// 	return todo
+// }
+
 // TodoCreate return pointer of todo
 func TodoCreate(item *db.TodoItemModel) *gorm.DB {
-	// todo := db.TodoItemModel{
-	// 	Title:       item.title,
-	// 	Description: item.description,
-	// 	CreatedAt:   time.Now(),
-	// 	DueDate:     time.Now(),
-	// 	Stared:      false,
-	// }
 	result := db.DB.Create(&item)
 	return result
 }
