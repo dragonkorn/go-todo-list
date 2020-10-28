@@ -7,16 +7,16 @@ services:
     container_name: go-todo-list
     ports:
       - 8080:8080
-    # depends_on:
-    #   - db
+    depends_on:
+      - db
     volumes:
       - ./:/app
-  # db:
-  #   image: postgres # https://hub.docker.com/_/postgres
-  #   container_name: localPostgres
-  #   restart: always
-  #   environment:
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: 5100
-  #   ports:
-  #     - 5432:5432
+  db:
+    image: postgres # https://hub.docker.com/_/postgres
+    container_name: localPostgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 5100
+    ports:
+      - 5432:5432

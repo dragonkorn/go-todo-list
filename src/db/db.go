@@ -1,34 +1,57 @@
 package db
 
 import (
-	"database/sql"
 	"fmt"
+	"time"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 const (
-	host     = "localhost"
+	host     = "localPostgres"
 	port     = 5432
 	user     = "postgres"
 	password = "5100"
 	dbname   = "go-todo-list"
 )
 
+// TodoItemModel - model for todo item
+type TodoItemModel struct {
+	ID          uint
+	Title       string
+	Description string
+	CreatedAt   time.Time
+	DueDate     time.Time
+	Stared      bool
+}
+
+var DB *gorm.DB
+
 // Connect = connect to database
-func Connect() *sql.DB {
+func Connect() *gorm.DB {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+	db, err := gorm.Open(postgres.Open(psqlInfo), &gorm.Config{})
 
-	db, err := sql.Open("postgres", psqlInfo)
-
+	// dsn := "host=localPostgres user=postgres password=5100 dbname=go-todo-list port=5432 sslmode=disable TimeZone=Asia/Bangkok"
+	// db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
-	defer db.Close()
-
-	err = db.Ping()
-	if err != nil {
-		panic(err)
-	}
+	DB = db
+	autoMigrate()
+	// defer db.Close()
 
 	fmt.Println("Successfully connected!")
 	return db
+}
+
+// auto Migrate
+func autoMigrate() {
+	DB.AutoMigrate(&TodoItemModel{})
+}
+
+// CheckDb for check database type
+func CheckDb() {
+	fmt.Printf("%T\n", DB)
 }
