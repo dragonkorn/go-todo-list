@@ -25,10 +25,25 @@ func getRouter(router *echo.Echo) *echo.Echo {
 		return c.String(http.StatusOK, "SUCCESS")
 	})
 
+	router.PUT("/todo", func(c echo.Context) error {
+		todo := new(db.TodoItemModel)
+		if err := c.Bind(todo); err != nil {
+			return err
+		}
+		fmt.Println(todo)
+		result := controllers.TodoEdit(todo)
+		return c.JSON(http.StatusOK, result)
+	})
+
 	router.GET("/todos", func(c echo.Context) error {
 		result := controllers.TodoQuery()
-		fmt.Println(result)
 		return c.JSON(http.StatusOK, result)
+	})
+
+	router.DELETE("/todo", func(c echo.Context) error {
+		fmt.Println(c.QueryParam("ID"))
+		controllers.TodoRemove(c.QueryParam("ID"))
+		return c.String(http.StatusOK, "SUCCESS")
 	})
 
 	router.File("/index", "public/templates/index.html")

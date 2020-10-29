@@ -23,9 +23,11 @@ type TodoItemModel struct {
 	Description string
 	CreatedAt   time.Time
 	DueDate     time.Time
+	Done        bool
 	Stared      bool
 }
 
+// DB - Database
 var DB *gorm.DB
 
 // Connect = connect to database

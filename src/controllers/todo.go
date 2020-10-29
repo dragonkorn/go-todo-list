@@ -31,3 +31,23 @@ func TodoCreate(item *db.TodoItemModel) *gorm.DB {
 	result := db.DB.Create(&item)
 	return result
 }
+
+// TodoEdit - edit todo by item
+func TodoEdit(item *db.TodoItemModel) db.TodoItemModel {
+	var todo db.TodoItemModel
+	db.DB.First(&todo, item.ID)
+
+	todo.Title = item.Title
+	todo.Description = item.Description
+	todo.Done = item.Done
+	todo.Stared = item.Stared
+	db.DB.Save(&todo)
+
+	return todo
+}
+
+// TodoRemove - remove todo item
+func TodoRemove(ID string) string {
+	db.DB.Delete(&db.TodoItemModel{}, ID)
+	return "SUCCESS"
+}
